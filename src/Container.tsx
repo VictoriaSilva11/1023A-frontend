@@ -1,16 +1,23 @@
-interface ContainerProps(props:ContainerProps){
-    nome:string
+import { useState } from "react"
+interface ContainerProps{
+  nome:string
 }
-let contador = 10
+
 function Container(props:ContainerProps){
-   contador = 10
-}
+  const [texto,setTexto] = useState("")
+
+  function trataInput(event:React.ChangeEvent<HTMLInputElement>){
+    console.log(event.currentTarget.value)
+    setTexto(event.currentTarget.value)
+  }
   return(
     <>
-     <h1>{props.nome}</h1>
-     valor contador:{contador}
-     <button onClick={mudar()}>mudar</button>
-     </>
+      <h1>{props.nome}</h1>
+      <p>Texto:{texto}</p>
+      <input type="text" 
+              placeholder="Mostrar Texto" 
+              onChange={trataInput}/>
+    </>
   )
 }
 export default Container
