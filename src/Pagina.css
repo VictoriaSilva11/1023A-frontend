@@ -1,0 +1,71 @@
+body {
+    margin: 0px;
+}
+header{
+    background-color: lightpink;
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 10vw;
+    align-items: center;
+    min-height: 10vh;
+}
+nav>ul{
+    list-style: none;
+    padding: 0px;
+    display: flex;
+    gap: 15px;
+
+}
+nav>ul>li>a{
+    text-decoration: none;
+    color:rgb(135, 60, 60);
+    font-weight: bold;
+}
+main{
+    margin-top: 15px;
+    padding: 0px 10vw;
+    display: flex;
+    
+}
+main>div{
+    flex: 1;
+}
+.container-listagem{
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+.produto-container{
+    box-sizing: border-box;
+    border: 1px solid #f0f0f0;
+    padding: 15px;
+    box-shadow: 0px 0px 10px 3px rgb(30, 30, 30, 0.1);
+    min-height: 200px;
+    max-width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.container-cadastro>form{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 100px;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0px 0px 10px 3px rgb(30, 30, 30, 0.1);
+}
+form>input[type="text"]{
+    padding: 10px;
+    border: 1px solid #f0f0f0;
+}
+form>input[type="text"]:focus{
+    outline: 1px solid #efbdbd;
+}
+form>input[type="submit"]{
+    max-width: 150px;
+    padding: 8px;
+    background-color: lightpink;
+    color: white;
+    border: 1px solid #f0f0f0;
+    font-weight: bold;
+}
