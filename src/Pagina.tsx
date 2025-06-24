@@ -8,42 +8,56 @@ interface ProdutosState {
 }
 
 function Pagina() {
-    useEffect(()=>{},[])
-    const [id,setId] = useState("")
-    const [nome,setNome] = useState("")
-    const [preco,setPreco] = useState("")
-    const [categoria,setCategoria] = useState("")
+    const [id, setId] = useState("")
+    const [nome, setNome] = useState("")
+    const [preco, setPreco] = useState("")
+    const [categoria, setCategoria] = useState("")
+    const [mensagem, setMensagem] = useState("")
     const [produtos, setProdutos] = useState<ProdutosState[]>([
-        {
-            id: 1,
-            nome: "Caderno",
-            preco: 20,
-            categoria: "Escolar"
-        }
     ])
-    function TrataCadastro(event:React.FormEvent<HTMLFormElement>){
+    useEffect(() => {
+        const buscaDados = async () => {
+            try {
+                const resultado = await fetch("http://localhost:8000/produtos")
+                if (resultado.status === 200) {
+                    const dados = await resultado.json()
+                    setProdutos(dados)
+                }
+                if (resultado.status === 400) {
+                    const erro = await resultado.json()
+                    setMensagem(erro.mensagem)
+                    //console.log(erro)
+                }
+            }
+            catch (erro) {
+                setMensagem("Fetch não funciona")
+            }
+        }
+        buscaDados()
+    }, [])// [] => significa as dependências dp useEffcts
+    function TrataCadastro(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         //Criar um novo produto
-        const novoProduto:ProdutosState = {
-            id:parseInt(id),
-            nome:nome,
-            preco:parseFloat(preco),
-            categoria:categoria
+        const novoProduto: ProdutosState = {
+            id: parseInt(id),
+            nome: nome,
+            preco: parseFloat(preco),
+            categoria: categoria
         }
         //Adicionar esse novo produto no vetor/Array de produtos
-        setProdutos([...produtos,novoProduto])
-        
+        setProdutos([...produtos, novoProduto])
+
     }
-    function trataId(event:React.ChangeEvent<HTMLInputElement>){
+    function trataId(event: React.ChangeEvent<HTMLInputElement>) {
         setId(event.target.value)
     }
-    function trataNome(event:React.ChangeEvent<HTMLInputElement>){
+    function trataNome(event: React.ChangeEvent<HTMLInputElement>) {
         setNome(event.target.value)
     }
-    function trataPreco(event:React.ChangeEvent<HTMLInputElement>){
+    function trataPreco(event: React.ChangeEvent<HTMLInputElement>) {
         setPreco(event.target.value)
     }
-    function trataCategoria(event:React.ChangeEvent<HTMLInputElement>){
+    function trataCategoria(event: React.ChangeEvent<HTMLInputElement>) {
         setCategoria(event.target.value)
     }
     return (
@@ -65,6 +79,12 @@ function Pagina() {
                 </nav>
             </header>
             <main>
+                {mensagem &&
+                    <div className="mensagem">
+                        <p>{mensagem}</p>
+                    </div>
+                }
+
                 <div className="container-listagem">
                     {produtos.map(produto => {
                         return (
@@ -84,11 +104,11 @@ function Pagina() {
                 </div>
                 <div className="container-cadastro">
                     <form onSubmit={TrataCadastro}>
-                        <input type="text" name="id" id="id" onChange={trataId} placeholder="Id"/>
-                        <input type="text" name="nome" id="nome" onChange={trataNome} placeholder="Nome"/>
-                        <input type="text" name="preco" id="preco" onChange={trataPreco} placeholder="Preço"/>
-                        <input type="text" name="categoria" id="categoria" onChange={trataCategoria} placeholder="Categoria"/>
-                        <input type="submit" value="Cadastrar"/>
+                        <input type="text" name="id" id="id" onChange={trataId} placeholder="Id" />
+                        <input type="text" name="nome" id="nome" onChange={trataNome} placeholder="Nome" />
+                        <input type="text" name="preco" id="preco" onChange={trataPreco} placeholder="Preço" />
+                        <input type="text" name="categoria" id="categoria" onChange={trataCategoria} placeholder="Categoria" />
+                        <input type="submit" value="Cadastrar" />
                     </form>
 
                 </div>
